@@ -18,7 +18,7 @@ class ClaimsView(generics.ListAPIView):
     queryset = Claims.objects.all()
     serializer_class = ClaimsSerializer
     filter_backends = [DjangoFilterBackend]
-    filter_fields = ['hobbies']
+    filter_fields = ['lookfor', 'iam','goal']
 
 class PostExample(generics.ListCreateAPIView):
     serializer_class = ClaimsSerializer

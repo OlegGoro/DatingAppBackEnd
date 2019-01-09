@@ -17,7 +17,7 @@ from celery.schedules import crontab
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,10 +29,17 @@ SECRET_KEY = 'vguj(#=ww4te0yt*#a$i9feud3!)h#+^ql9$nx^f!qg^_3y@+n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', '192.168.1.173']
 
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+STATIC_ROOT = os.path.join(BASE_DIR, "media")
 
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    'C:/Users/io/music_service/api/static',
+)
 # Application definition
 
 INSTALLED_APPS = [

@@ -7,7 +7,7 @@ from music.models import ChatSession
 class ClaimsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Claims
-        fields = ("name", "goal", "hobbies", "lat", "lon", "esttime", "wholikes")
+        fields = ("name", "goal", "iam", "lookfor", "lat", "lon", "esttime", "wholikes", "image")
 
 class MessagesSerializer(serializers.ModelSerializer):
     class Meta:
