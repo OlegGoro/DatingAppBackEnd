@@ -12,13 +12,21 @@ from django.http import QueryDict
 from django.http import HttpResponse
 from django.db.models.functions import Concat
 from django.utils.translation import gettext as _
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 
 class ClaimsView(generics.ListAPIView):
     queryset = Claims.objects.all()
+    model = Claims
     serializer_class = ClaimsSerializer
-    filter_backends = [DjangoFilterBackend]
-    filter_fields = ['lookfor', 'iam','goal']
+    def get_queryset(self):
+        if self.request.GET.get('name') != None:
+            message = self.request.GET.get('name').split()
+            queryset = Claims.objects.filter(name__in=message)
+        else:
+            queryset = Claims.objects.all()
+        return queryset
 
 class PostExample(generics.ListCreateAPIView):
     serializer_class = ClaimsSerializer

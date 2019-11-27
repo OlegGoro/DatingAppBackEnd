@@ -29,7 +29,7 @@ SECRET_KEY = 'vguj(#=ww4te0yt*#a$i9feud3!)h#+^ql9$nx^f!qg^_3y@+n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', '192.168.1.173']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', '192.168.0.107']
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'music',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -94,6 +95,9 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -134,6 +138,7 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+
 
 
 
