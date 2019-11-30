@@ -18,7 +18,8 @@ class Claims(models.Model):
 class ChatSession(models.Model):
     chatsession = models.AutoField(primary_key=True)
     esttime = models.FloatField(_('Seconds'), null=True, blank=True)
-    users = models.CharField(max_length=255, null=False, blank=True)
+    user1 = models.CharField(max_length=255, null=False, blank=True)
+    user2 = models.CharField(max_length=255, null=False, blank=True)
 
 class Messages(models.Model):
     message = models.CharField(max_length=255, null=False)

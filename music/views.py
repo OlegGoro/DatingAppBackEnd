@@ -13,6 +13,9 @@ from django.http import HttpResponse
 from django.db.models.functions import Concat
 from django.utils.translation import gettext as _
 from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Q
+import time
+
 
 
 
@@ -45,9 +48,16 @@ class AddChatSessionView(generics.ListCreateAPIView):
 
 class ChatSessionView(generics.ListAPIView):
     queryset = ChatSession.objects.all()
+    model = ChatSession
     serializer_class = ChatSessionSerializer
-    filter_backends = [DjangoFilterBackend]
-    filter_fields = ['users']
+    def get_queryset(self):
+        if self.request.GET.get('user1') != None or self.request.GET.get('user2') != None:
+            message = self.request.GET.get('user1').split()
+            message2 = self.request.GET.get('user2').split()
+            queryset = ChatSession.objects.filter(Q(user1__in=message) | Q(user2__in=message2))
+        else:
+            queryset = ChatSession.objects.all()
+        return queryset
 
 class AddLikeView(generics.UpdateAPIView):
     def dispatch(self, request, *args, **kwargs):
@@ -61,13 +71,14 @@ class AddLikeView(generics.UpdateAPIView):
         User2 = Claims.objects.all().get(name=dataparsed['MyName'])
         User1Likes = getattr(User1, 'wholikes')
         User2Likes = getattr(User2, 'wholikes')
-        MatchedGroup = dataparsed['ClaimName'] + " " + dataparsed['MyName']
+        MatchedUser1 = dataparsed['MyName']
+        MatchedUser2 = dataparsed['ClaimName']
         if (dataparsed['MyName'] not in User1Likes):
             readytoupdate = Claims.objects.all().filter(name=dataparsed['ClaimName'])
             readytoupdate.update(wholikes=Concat("wholikes", Value(" "), Value(dataparsed['MyName'])))
-        if (dataparsed['MyName'] in User1Likes and dataparsed['ClaimName'] in User2Likes):
+        if (dataparsed['ClaimName'] in User2Likes):
             check = "Great! Matched!"
-            ChatSession.objects.create(esttime="300", users=MatchedGroup)
+            ChatSession.objects.create(esttime="300", user1=MatchedUser1, user2=MatchedUser2)
         else:
             check = "Sorry. No match."
 

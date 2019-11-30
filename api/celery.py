@@ -24,10 +24,10 @@ from music.models import Messages
 @app.task(bind=True)
 def debug_task(self):
     print ("is works!")
-    Claims.objects.all().update(esttime=F('esttime') - 20)
+    Claims.objects.all().update(esttime=F('esttime') - 1)
     delete = Claims.objects.all().filter(esttime__lte=0)
     delete.delete()
-    ChatSession.objects.all().update(esttime=F('esttime') - 20)
+    ChatSession.objects.all().update(esttime=F('esttime') - 1)
     delete = Messages.objects.filter(chatsession__esttime__lte=0)
     delete.delete()
     delete = ChatSession.objects.filter(esttime__lte=0)
