@@ -27,6 +27,9 @@ class ClaimsView(generics.ListAPIView):
         if self.request.GET.get('name') != None:
             message = self.request.GET.get('name').split()
             queryset = Claims.objects.filter(name__in=message)
+        elif self.request.GET.get('iam') != None:
+            message = self.request.GET.get('iam').split()
+            queryset = Claims.objects.filter(iam__in=message)
         else:
             queryset = Claims.objects.all()
         return queryset
